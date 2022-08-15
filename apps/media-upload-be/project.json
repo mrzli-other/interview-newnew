@@ -1,0 +1,57 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/media-upload-be/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/media-upload-be",
+        "main": "apps/media-upload-be/src/main.ts",
+        "tsConfig": "apps/media-upload-be/tsconfig.app.json",
+        "assets": ["apps/media-upload-be/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/media-upload-be/src/environments/environment.ts",
+              "with": "apps/media-upload-be/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "media-upload-be:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "media-upload-be:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/media-upload-be/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/media-upload-be"],
+      "options": {
+        "jestConfig": "apps/media-upload-be/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["app:media-upload", "scope:backend", "type:app"]
+}

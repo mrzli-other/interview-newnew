@@ -1,0 +1,84 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/media-upload-web/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/media-upload-web",
+        "index": "apps/media-upload-web/src/index.html",
+        "baseHref": "/",
+        "main": "apps/media-upload-web/src/main.tsx",
+        "polyfills": "apps/media-upload-web/src/polyfills.ts",
+        "tsConfig": "apps/media-upload-web/tsconfig.app.json",
+        "assets": [
+          "apps/media-upload-web/src/favicon.ico",
+          "apps/media-upload-web/src/assets"
+        ],
+        "styles": ["apps/media-upload-web/src/styles.scss"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/media-upload-web/src/environments/environment.ts",
+              "with": "apps/media-upload-web/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "media-upload-web:build",
+        "hmr": true,
+        "proxyConfig": "apps/media-upload-web/proxy.conf.json"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "media-upload-web:build:development"
+        },
+        "production": {
+          "buildTarget": "media-upload-web:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/media-upload-web/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/media-upload-web"],
+      "options": {
+        "jestConfig": "apps/media-upload-web/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["app:media-upload", "scope:web", "type:app"]
+}

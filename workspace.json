@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
-  "projects": {}
+  "projects": {
+    "media-upload-be": "apps/media-upload-be",
+    "media-upload-web": "apps/media-upload-web"
+  }
 }
